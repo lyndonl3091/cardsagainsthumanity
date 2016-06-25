@@ -8,68 +8,88 @@ app.controller('mainCtrl', function($scope, $http, Deck){
 
   var whiteCards;
   var blackCards;
+  $scope.lastPooped = [5,3,2,6,6];
   $scope.blackCard;
+
+
+  //current white cards to display
   $scope.currWhiteCards;
 
-  fillWhiteDeck();
-  fillBlackDeck();
+  //submitted whote cards
+  $scope.submittedWhiteCards;
 
-function fillWhiteDeck() {
-  Deck.getWhite()
-  .then( res =>{
-    whiteCards = res;
-    whiteCards = shuffle(whiteCards);
-   
-    let players = [];
+  fillBlackDeck();
+  fillWhiteDeck()
+  .then(createPlayers);
+
+  function fillWhiteDeck(){
+    return Deck.getWhite()
+    .then( res =>{
+      whiteCards = res;
+      whiteCards = shuffle(whiteCards);
+    })
+    .catch(err =>{
+      console.log("err: ", err);
+    })
+  }
+
+  function fillBlackDeck() {
+    Deck.getBlack()
+    .then( res =>{
+      blackCards = res;
+      blackCards = shuffle(blackCards);
+    })
+    .catch(err =>{
+      console.log("err: ", err);
+    })
+  }
+
+  function createPlayers(){
+    $scope.players = [];
     
     for(let i =0; i<numPlayers; i++){
-
       let currPlayer = {
         hand: getCards(10),
         czar: false,
-        points: 0
+        points: 0,
+        pooped: $scope.lastPooped[i]
       }
-
-      players.push(currPlayer);
-
+      $scope.players.push(currPlayer);
     }
-    console.log("players: ", players);
-  })
-  .catch(err =>{
-    console.log("err: ", err);
-  })
-}
-
-function fillBlackDeck() {
-    Deck.getBlack()
-  .then( res =>{
-    blackCards = res;
-    blackCards = shuffle(blackCards);
-  })
-  .catch(err =>{
-    console.log("err: ", err);
-  })
-}
-
-function getBlackCard(){
-  if(blackCards.length === 0){
-    fillBlackDeck();
+    console.log("players: ", $scope.players);
   }
-  return blackCards.splice(0, 1);
-}
 
-function getCards(numCards){
-  if(whiteCards.length < numCards){
-    fillWhiteDeck();
+  function pickCzar(){
+    var min = Infinity;
+    var czarIndex = 0;
+    for(let i =0; i< numPlayers; i++){
+      if($scope.players[i].lastPooped < min){
+        min = $scope.players[i].lastPooped;
+        czarIndex =i;
+      }
+    }
+    $scope.players[i].czar = true;
   }
-  return whiteCards.splice(0, numCards);
-}
 
+  function getBlackCard(){
+    if(blackCards.length === 0){
+      fillBlackDeck();
+    }
+    return blackCards.splice(0, 1);
+  }
+
+  function getCards(numCards){
+    console.log("whiteCards", whiteCards);
+    if(whiteCards.length < numCards){
+      fillWhiteDeck();
+    }
+    return whiteCards.splice(0, numCards);
+  }
 
 });
 
 
-function shuffle(array) {
+function shuffle(array){
   var currentIndex = array.length, temporaryValue, randomIndex;
 
   // While there remain elements to shuffle...
@@ -91,11 +111,16 @@ function shuffle(array) {
 
 
 
+
+
+
+
+
+
+
 app.controller('game1Ctrl', function($scope, $stateParams){
   console.log("game1Ctrl");
   console.log('$stateParams:', $stateParams);
-  
-
 
 });
 

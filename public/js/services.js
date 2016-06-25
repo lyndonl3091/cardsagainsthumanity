@@ -11,7 +11,7 @@ app.service('Deck', function($http){
       url: '/decks'
     })
     .then(res =>{
-     // console.log("res.data: ",res.data);
+     //console.log("res.data: ",res.data);
      return res.data.whiteCards.map(function(cardText){
         return  {
           text: cardText
