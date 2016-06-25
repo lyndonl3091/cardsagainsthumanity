@@ -4,9 +4,14 @@
   <meta charset="UTF-8">
   <title>Game 1</title>
 </head>
-<body>
+<body ng-controller='game1Ctrl'>
  <div class = "container">
   <h1>Game 1</h1>
 </div>
+<form>
+  Number of Players <input type="text" ng-model ='numberOfPlayers'>
+  <button ng-click='players()'>Submit</button>
+</form>
+{{playersAvailable}}
 </body>
 </html>

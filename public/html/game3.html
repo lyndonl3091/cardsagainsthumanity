@@ -6,7 +6,28 @@
 </head>
 <body>
  <div class = "container">
-  <h1>Game 3</h1>
+  <h1>Player cards</h1>
+
+  <table class='table'>
+    <thead>
+      <th>Black card Contents</th>
+      <th>{{blackCardValue}}</th>
+    </thead>
+  </table>
+
+  <table class='table'>
+    <thead>
+      <th>Card description</th>
+    </thead>
+    <tbody>
+      <!-- <tr></tr> -->
+      <tr ng-repeat='whiteCard in whiteCards track by $index'>
+        <td>{{whiteCard}}</td>
+        <td><button class='btn btn-danger' ng-click='submitWhiteCard(whiteCard,$index)'>Select</button></td>
+      </tr>
+    </tbody>
+  </table>
+
 </div>
 </body>
 </html>
