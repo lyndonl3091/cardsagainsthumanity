@@ -4,7 +4,7 @@ var app = angular.module('myApp');
 
 app.controller('mainCtrl', function($scope, $http, Deck){
 
-	$scope.currBlackCard = getBlackCard();
+	//$scope.currBlackCard = getBlackCard();
 
 	var whiteCards;
 	var blackCards;
@@ -48,7 +48,7 @@ app.controller('mainCtrl', function($scope, $http, Deck){
 	function createPlayers(){
 		$scope.players = [];
 
-		for(let i =0; i<numPlayers; i++){
+		for(let i =0; i<$scope.numPlayers; i++){
 			let currPlayer = {
 				hand: getCards(10),
 				czar: false,
@@ -63,7 +63,7 @@ app.controller('mainCtrl', function($scope, $http, Deck){
 	function pickCzar(){
 		var min = Infinity;
 		var czarIndex = 0;
-		for(let i =0; i< numPlayers; i++){
+		for(let i =0; i< $scope.numPlayers; i++){
 			if($scope.players[i].lastPooped < min){
 				min = $scope.players[i].lastPooped;
 				czarIndex =i;
