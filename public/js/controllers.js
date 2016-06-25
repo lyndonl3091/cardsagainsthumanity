@@ -9,7 +9,7 @@ app.controller('mainCtrl', function($scope, $http, Deck){
 	var whiteCards;
 	var blackCards;
 	$scope.lastPooped = [5,3,2,6,6];
-	$scope.blackCard;
+	$scope.currBlackCard;
 
 	$scope.numPlayers = 5;
 
@@ -117,15 +117,15 @@ app.controller('mainCtrl', function($scope, $http, Deck){
 
 
 
-app.controller('game1Ctrl', function($scope, $stateParams){
+app.controller('startGameCtrl', function($scope, $stateParams){
 });
 
 
-app.controller('game2Ctrl', function($scope, $stateParams){
+app.controller('judgeScreenCtrl', function($scope, $stateParams){
 
 });
 
-app.controller('game3Ctrl', function($scope, $stateParams){
+app.controller('playerCtrl', function($scope, $stateParams){
 });
 
 app.controller('game4Ctrl', function($scope, $stateParams){
