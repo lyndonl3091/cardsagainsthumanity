@@ -30,12 +30,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-/////add routers here/////
 
 app.use('/decks', require('./routes/decks'));
-
-
-//////////////////////////
 
 
 app.use('/', (req, res)=>{

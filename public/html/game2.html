@@ -2,11 +2,39 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Game 2</title>
+  <title>Judge Screen</title>
 </head>
 <body>
  <div class = "container">
-  <h1>Game 2</h1>
-</div>  
+  <h1>Judge Screen</h1>
+  <div class="col-sm-12"></div>
+
+  <div class="bordersPage2">
+      <div class="blackCardPage2">
+          Yup
+      </div>
+
+
+      <table class='table'>
+        <thead>
+          <th>Player</th>
+          <th>Description</th>
+        </thead>
+        <tbody>
+          <tr ng-repeat='white in blackCardArrayStuff'>
+            <td>{{white}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+      </div>
+</div>
+
+
+
+
+
+  </div>
 </body>
 </html>

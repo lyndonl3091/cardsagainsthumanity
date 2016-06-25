@@ -1,3 +1,29 @@
 .gameSquares{
   padding-top: 8px;
 }
+
+.bordersPage2{
+  height: 400px;
+  width: 1000px;
+  border: 1px solid black;
+}
+.blackCardPage2{
+  background-color: black;
+  color:white;
+  height: 150px;
+  width: 100px;
+  border: 1px solid black;
+  margin-top: 20px;
+  margin-left: 250px;
+  /*text-align:center;*/
+}
+.whiteCardPage2{
+  height: 200px;
+  width: 100px;
+  border: 1px solid black;
+
+}
+
+.row {
+  margin-left: 5px;
+}
