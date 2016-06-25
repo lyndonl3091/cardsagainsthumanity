@@ -109,6 +109,7 @@ app.controller('mainCtrl', function($scope, $http, Deck){
 		}
 		return array;
 	}
+	
 });
 
 
