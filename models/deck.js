@@ -3,9 +3,10 @@
 const path = require('path');
 const fs = require('fs');
 
-let dbpath = path.join(__dirname, '../data/database.db');
+let dpath = path.join(__dirname, '../cardData/cards.json');
 
 
-exports.getAll = cb =>{
-  db.all(`select * from tasks;`, cb);
-}
+fs.readFile(dpath, (err, data) =>{
+  if(err) return console.error(err);
+  console.log("data: ", data);
+})

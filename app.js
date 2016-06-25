@@ -32,7 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 /////add routers here/////
 
-app.use('/cardData', require('./routes/cardData'));
+app.use('/decks', require('./routes/decks'));
 
 
 //////////////////////////
