@@ -1,5 +1,7 @@
 'use strict'
 
+console.log("in decks");
+
 const express = require('express');
 
 let router = express.Router();
