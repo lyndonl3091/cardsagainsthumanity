@@ -6,9 +6,17 @@ const express = require('express');
 
 let router = express.Router();
 
+let Deck =require('../models/deck');
 
 router.get('/', (req,res)=>{
-  res.send();
+  Deck.getAll()
+  .then( deck =>{
+    res.send(deck);
+  })
+  .catch(err =>{
+    res.status(400).send(err);
+  })
+
 })
 
 
