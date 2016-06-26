@@ -39,26 +39,27 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 
 
 	function populateHands(){
-		for (let i = 0, len = players.length; i < len; i++){
-			$scope.players[i].hand.push(getWhiteCards(HANDSIZE - $scope.players[i].hand.length))
+		for (let i = 0, len = $scope.players.length; i < len; i++){
+			$scope.players[i].hand.push(...getWhiteCards(HANDSIZE - $scope.players[i].hand.length))
 		}
 	}
 
 
-	function judgePicks(index){
+	$scope.judgePicks = index => {
 		//  winning player goes first next round
 		$scope.currPlayer = index;
 		$scope.players[$scope.currPlayer].score++;
 		populateHands();
+		swal({   title: "Sweet!",   text: "Here's a custom image.",   imageUrl: "images/thumbs-up.jpg" }, newRound);
 		//  sweetAlert triggers
 
 	}
 
 
 	function newRound(){
-
+		$scope.submittedWhiteCards = [];
 		getBlackCard();
-		if($scope.players[currPlayer].score === SCORETOWIN){
+		if($scope.players[$scope.currPlayer].score === SCORETOWIN){
 			$state.go('endGameScreen');
 		} else {
 			changeCzar();
@@ -72,7 +73,7 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 		for(var index=0; index < $scope.players.length; index++){
 			if ($scope.players[index].czar) {
 				$scope.players[index].czar = false;
-				$scope.players[(index + 1) % players.length].czar = true;
+				$scope.players[(index + 1) % $scope.players.length].czar = true;
 			}
 		}
 	}
@@ -188,6 +189,14 @@ function nextPlayer(){
 	}
 }
 
+$scope.winningCard = id => {
+
+	console.log('player:', id);
+
+
+}
+
+
 function shuffle(array){
 	var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -205,6 +214,8 @@ function shuffle(array){
 	}
 	return array;
 }
+
+
 
 });
 

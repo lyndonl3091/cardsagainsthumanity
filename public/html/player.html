@@ -22,7 +22,7 @@
     <tbody>
       <!-- <tr></tr> -->
       <tr ng-repeat='whiteCard in currWhiteCards track by $index'>
-        <td>{{whiteCard}}</td>
+        <td>{{whiteCard.text}}</td>
         <td><button class='btn btn-danger' ng-click='submitWhiteCard(whiteCard,$index)'>Select</button></td>
       </tr>
     </tbody>

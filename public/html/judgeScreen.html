@@ -21,7 +21,7 @@
         </thead>
         <tbody>
           <tr ng-repeat='white in submittedWhiteCards track by $index'>
-            <td ng-click='winningCard(white.player)'>{{white.text}}</td>
+            <td ng-click='judgePicks(white.player)'>{{white.text}}</td>
           </tr>
         </tbody>
       </table>
