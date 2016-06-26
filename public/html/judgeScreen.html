@@ -20,8 +20,8 @@
           <th>Player</th>
         </thead>
         <tbody>
-          <tr ng-repeat='white in submittedWhiteCards track by $index'>
-            <td ng-click='judgePicks(white.player)'>{{white.text}}</td>
+          <tr ng-repeat='group in submittedWhiteCards track by $index'>
+            <td ng-click='judgePicks(card.player)' ng-repeat='card in group'>{{card.text}}</td>
           </tr>
         </tbody>
       </table>
