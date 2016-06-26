@@ -9,6 +9,7 @@
   <h1>Start Game</h1>
 </div>
 <form>
+
   Number of Players <input type="number" min=5 ng-model ='game.numPlayers' required>
   <button ng-click='startGame()'>Submit</button>
 </form>
@@ -20,6 +21,8 @@
   <br><input type="text" ng-repeat='player in players' placeholder="Hours since last poop">{{player}}
   <button>Submit</button>
 </form>
+
+
 
 
 </body>
