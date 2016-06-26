@@ -2,10 +2,11 @@
 
 var app = angular.module('myApp');
 
-app.controller('mainCtrl', function($scope, $http, Deck){
+app.controller('mainCtrl', function($scope, $http, $state, Deck){
+	console.log('loadmain');
 
 	//$scope.currBlackCard = getBlackCard();
-  $scope.currPlayer;
+	$scope.currPlayer;
 	var whiteCards;
 	var blackCards;
 	$scope.lastPooped = [5,3,2,6,6];
@@ -13,30 +14,40 @@ app.controller('mainCtrl', function($scope, $http, Deck){
 
 	$scope.numPlayers = 5;
 
-	//current white cards to display
-	$scope.currWhiteCards;
-
-	//submitted white cards
-	$scope.submittedWhiteCards = [];
-
-
 	$scope.startGame = function(){
-	  fillBlackDeck()
-	  .then(fillWhiteDeck)
-	  .then(function (){
-	   	getBlackCard();
-	   	createPlayers();
-	   	pickCzar();
-	   	$scope.currWhiteCards = $scope.players[$scope.currPlayer].hand;
-	 	})
-	 	.catch(err=>{
-	  	console.log(err);
-	  });
+		fillBlackDeck()
+		.then(fillWhiteDeck)
+		.then(function (){
+			$scope.submittedWhiteCards = [];
+			$scope.currWhiteCards = [];
+			getBlackCard();
+			createPlayers();
+			pickCzar();
+			$scope.currWhiteCards = $scope.players[$scope.currPlayer].hand;
+			$state.go('player');
+		})
+		.catch(err=>{
+			console.log(err);
+		});
 	}
 
-  function populateHand(){
+	function populateHand(){
+	}
 
-  }
+
+	function judgePicks(){
+		
+	}
+
+	
+	function newRound(){
+		
+	}
+
+	
+
+
+
 
 	function fillWhiteDeck(){
 		return Deck.getWhite()
@@ -83,7 +94,7 @@ app.controller('mainCtrl', function($scope, $http, Deck){
 				min = $scope.players[i].pooped;
 				czarIndex =i;
 			}
-			
+
 		}
 		$scope.players[czarIndex].czar = true;
 		if(czarIndex == $scope.numPlayers-1)
@@ -93,52 +104,55 @@ app.controller('mainCtrl', function($scope, $http, Deck){
 
 	function getBlackCard(){
 		if(blackCards.length === 0){
-			fillBlackDeck();
+			fillBlackDeck()
+			.then(function() {
+				$scope.currBlackCard = blackCards.splice(0, 1)[0];
+			});
+		} else {
+			$scope.currBlackCard = blackCards.splice(0, 1)[0];
 		}
-		$scope.currBlackCard = blackCards.splice(0, 1)[0];
 	}
 
 	function getWhiteCards(numCards){
 		if(whiteCards.length < numCards){
-			fillWhiteDeck();
+			fillWhiteDeck()
+			.then(function() {
+				return whiteCards.splice(0, numCards);
+			});
+		} else {
+			return whiteCards.splice(0, numCards);
 		}
-		return whiteCards.splice(0, numCards);
 	}
 
 	$scope.submitWhiteCard = function(card,index){
-   
+		card.player = $scope.currPlayer;
 		$scope.submittedWhiteCards.push(card)
 		$scope.players[$scope.currPlayer].hand.splice(index, 1);
 		console.log("$scope.currBlackCard.pick:", $scope.currBlackCard.pick);
 		console.log("$scope.submittedWhiteCards.length:", $scope.submittedWhiteCards.length);
 		console.log("mod val: ", (!($scope.submittedWhiteCards.length % $scope.currBlackCard.pick)));
 		if( !($scope.submittedWhiteCards.length % $scope.currBlackCard.pick))
-		  nextPlayer();
-
-
+			nextPlayer();
 	}
 
 	function nextPlayer(){
 
-		
 		if($scope.currPlayer === $scope.numPlayers-1)
 			$scope.currPlayer = -1;
-  	$scope.currPlayer++;
-  	if($scope.players[$scope.currPlayer].czar === true){
-  		console.log("CZAR at: ", $scope.currPlayer);
+		$scope.currPlayer++;
+		if($scope.players[$scope.currPlayer].czar === true){
+			console.log("CZAR at: ", $scope.currPlayer);
 			nextPlayer();
 		}
 
-    console.log("Next player at: ", $scope.currPlayer);
+		console.log("Next player at: ", $scope.currPlayer);
 
 		$scope.currWhiteCards = $scope.players[$scope.currPlayer].hand;
 
 		//check if wihte cards = pick*numplayers
 		console.log($scope.submittedWhiteCards.length ," vs ",  $scope.currBlackCard.pick*$scope.numPlayers)
 		if($scope.submittedWhiteCards.length === $scope.currBlackCard.pick*$scope.numPlayers){
-			//go to judge
-			console.log("go to judge");
-
+			$state.go('judgeScreen');
 		}
 	}
 
