@@ -11,18 +11,17 @@
 
   <div class="bordersPage2">
       <div class="blackCardPage2">
-          Yup
+          {{currBlackCard.text}}
       </div>
 
 
-      <table class='table'>
+      <table class='table table-hover'>
         <thead>
           <th>Player</th>
-          <th>Description</th>
         </thead>
         <tbody>
-          <tr ng-repeat='white in submittedWhiteCards'>
-            <td>{{white}}</td>
+          <tr ng-repeat='white in submittedWhiteCards track by $index'>
+            <td ng-click='winningCard(white.player)'>{{white.text}}</td>
           </tr>
         </tbody>
       </table>

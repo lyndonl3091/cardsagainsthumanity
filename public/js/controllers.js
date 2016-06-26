@@ -14,6 +14,7 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 
 	$scope.numPlayers = 5;
 
+
 	$scope.startGame = function(){
 		fillBlackDeck()
 		.then(fillWhiteDeck)
@@ -31,20 +32,32 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 		});
 	}
 
+	$scope.winningCard = id => {
+
+		console.log('player:', id);
+
+		swal({   title: "Sweet!",   text: "Here's a custom image.",   imageUrl: "images/thumbs-up.jpg" });
+
+	}
+
+
+
+
+
 	function populateHand(){
 	}
 
 
 	function judgePicks(){
-		
+
 	}
 
-	
+
 	function newRound(){
-		
+
 	}
 
-	
+
 
 
 
