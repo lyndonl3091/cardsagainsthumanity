@@ -5,7 +5,7 @@ var app = angular.module('myApp');
 app.controller('mainCtrl', function($scope, $http, Deck){
 
 	//$scope.currBlackCard = getBlackCard();
-
+  $scope.currPlayer;
 	var whiteCards;
 	var blackCards;
 	$scope.lastPooped = [5,3,2,6,6];
@@ -16,12 +16,27 @@ app.controller('mainCtrl', function($scope, $http, Deck){
 	//current white cards to display
 	$scope.currWhiteCards;
 
-	//submitted whote cards
-	$scope.submittedWhiteCards;
+	//submitted white cards
+	$scope.submittedWhiteCards = [];
 
-	fillBlackDeck();
-	fillWhiteDeck()
-	.then(createPlayers);
+
+	$scope.startGame = function(){
+	  fillBlackDeck()
+	  .then(fillWhiteDeck)
+	  .then(function (){
+	   	getBlackCard();
+	   	createPlayers();
+	   	pickCzar();
+	   	$scope.currWhiteCards = $scope.players[$scope.currPlayer].hand;
+	 	})
+	 	.catch(err=>{
+	  	console.log(err);
+	  });
+	}
+
+  function populateHand(){
+
+  }
 
 	function fillWhiteDeck(){
 		return Deck.getWhite()
@@ -35,7 +50,7 @@ app.controller('mainCtrl', function($scope, $http, Deck){
 	}
 
 	function fillBlackDeck() {
-		Deck.getBlack()
+		return Deck.getBlack()
 		.then( res =>{
 			blackCards = res;
 			blackCards = shuffle(blackCards);
@@ -49,13 +64,13 @@ app.controller('mainCtrl', function($scope, $http, Deck){
 		$scope.players = [];
 
 		for(let i =0; i<$scope.numPlayers; i++){
-			let currPlayer = {
-				hand: getCards(10),
+			let playerToAdd = {
+				hand: getWhiteCards(10),
 				czar: false,
 				points: 0,
 				pooped: $scope.lastPooped[i]
 			}
-			$scope.players.push(currPlayer);
+			$scope.players.push(playerToAdd);
 		}
 		console.log("players: ", $scope.players);
 	}
@@ -64,23 +79,26 @@ app.controller('mainCtrl', function($scope, $http, Deck){
 		var min = Infinity;
 		var czarIndex = 0;
 		for(let i =0; i< $scope.numPlayers; i++){
-			if($scope.players[i].lastPooped < min){
-				min = $scope.players[i].lastPooped;
+			if($scope.players[i].pooped < min){
+				min = $scope.players[i].pooped;
 				czarIndex =i;
 			}
+			
 		}
-		$scope.players[i].czar = true;
+		$scope.players[czarIndex].czar = true;
+		if(czarIndex == $scope.numPlayers-1)
+			czarIndex = -1;
+		$scope.currPlayer = czarIndex+1;
 	}
 
 	function getBlackCard(){
 		if(blackCards.length === 0){
 			fillBlackDeck();
 		}
-		return blackCards.splice(0, 1);
+		$scope.currBlackCard = blackCards.splice(0, 1)[0];
 	}
 
-	function getCards(numCards){
-		console.log("whiteCards", whiteCards);
+	function getWhiteCards(numCards){
 		if(whiteCards.length < numCards){
 			fillWhiteDeck();
 		}
@@ -88,8 +106,22 @@ app.controller('mainCtrl', function($scope, $http, Deck){
 	}
 
 	$scope.submitWhiteCard = function(card,index){
-		submittedWhiteCards.push(card)
-		//  TODO: remove from player hand
+   
+		$scope.submittedWhiteCards.push(card)
+		$scope.players[$scope.currPlayer].hand.splice(index, 1);
+		console.log("$scope.currBlackCard.pick:", $scope.currBlackCard.pick);
+		console.log("$scope.submittedWhiteCards.length:", $scope.submittedWhiteCards.length);
+		console.log("mod val: ", (!($scope.submittedWhiteCards.length % $scope.currBlackCard.pick)));
+		if( !($scope.submittedWhiteCards.length % $scope.currBlackCard.pick) )
+		nextPlayer();
+	}
+
+	function nextPlayer(){
+		
+		if($scope.currPlayer === $scope.numPlayers-1)
+			$scope.currPlayer = -1;
+  	$scope.currPlayer++;
+		$scope.currWhiteCards = $scope.players[$scope.currPlayer].hand;
 	}
 
 	function shuffle(array){
@@ -109,7 +141,7 @@ app.controller('mainCtrl', function($scope, $http, Deck){
 		}
 		return array;
 	}
-	
+
 });
 
 

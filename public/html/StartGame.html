@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <title>Start Game</title>
 </head>
-<body ng-controller='game1Ctrl'>
+<body ng-controller='mainCtrl'>
  <div class = "container">
   <h1>Start Game</h1>
 </div>
 <form>
   Number of Players <input type="text" ng-model ='numberOfPlayers'>
-  <button ng-click='players()'>Submit</button>
+  <button ng-click='startGame()'>Submit</button>
 </form>
 {{numPlayers}}
 </body>
