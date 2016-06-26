@@ -9,12 +9,14 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 	$scope.currPlayer;
 	var whiteCards;
 	var blackCards;
-	$scope.lastPooped = [5,3,2,6,6];
+	$scope.lastPooped = [3,4,3,2,6,6];
 	$scope.currBlackCard;
 
-	$scope.numPlayers = 5;
+	//  why does this become the value when startGame is called?
+	//  $scope.numPlayers = 5;
 
 	$scope.startGame = function(){
+	  debugger;
 		fillBlackDeck()
 		.then(fillWhiteDeck)
 		.then(function (){
@@ -25,6 +27,7 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 			pickCzar();
 			$scope.currWhiteCards = $scope.players[$scope.currPlayer].hand;
 			$state.go('player');
+			console.log($scope.numPlayers);
 		})
 		.catch(err=>{
 			console.log(err);
