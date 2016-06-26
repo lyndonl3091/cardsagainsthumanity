@@ -24,17 +24,17 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 		.then(fillWhiteDeck)
 		.then(function (){
 			getBlackCard();
-
+			createPlayers();
 			//  reset submittedWhiteCards with space for each player's submission
 			//  there are holes in the array. 
 			$scope.submittedWhiteCards = [];
 			for (let i = 0; i < $scope.game.numPlayers; i++){
-				if(!players[i].czar)
+				if(!$scope.players[i].czar)
 					$scope.submittedWhiteCards[i] = [];
 			}
 
 			$scope.currWhiteCards = [];
-			createPlayers();
+
 			pickCzar();
 			$scope.currWhiteCards = $scope.players[$scope.currPlayer].hand;
 			$state.go('player');
@@ -169,8 +169,18 @@ $scope.submitWhiteCard = function(card,index){
 	card.player = $scope.currPlayer;
 	$scope.submittedWhiteCards[card.player].push(card);
 	$scope.players[card.player].hand.splice(index, 1);
-	if( !($scope.submittedWhiteCards.length % $scope.currBlackCard.pick))
+  let length  = getLength($scope.submittedWhiteCards);
+
+	if(!(length % $scope.currBlackCard.pick))
 		nextPlayer();
+}
+
+function getLength(nestedArr){
+	var flattened = nestedArr.reduce(function(a, b) {
+  return a.concat(b);
+  }, []);
+
+  return flattened.length;
 }
 
 function nextPlayer(){
@@ -185,7 +195,9 @@ function nextPlayer(){
 	$scope.currWhiteCards = $scope.players[$scope.currPlayer].hand;
 
 	//check if wihte cards = pick*numplayers
-	if($scope.submittedWhiteCards.length === $scope.currBlackCard.pick*($scope.game.numPlayers -1)){
+
+	let length  = getLength($scope.submittedWhiteCards);
+	if(length === $scope.currBlackCard.pick*($scope.game.numPlayers -1)){
 		$state.go('judgeScreen');
 	}
 }
