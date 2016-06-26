@@ -112,16 +112,34 @@ app.controller('mainCtrl', function($scope, $http, Deck){
 		console.log("$scope.currBlackCard.pick:", $scope.currBlackCard.pick);
 		console.log("$scope.submittedWhiteCards.length:", $scope.submittedWhiteCards.length);
 		console.log("mod val: ", (!($scope.submittedWhiteCards.length % $scope.currBlackCard.pick)));
-		if( !($scope.submittedWhiteCards.length % $scope.currBlackCard.pick) )
-		nextPlayer();
+		if( !($scope.submittedWhiteCards.length % $scope.currBlackCard.pick))
+		  nextPlayer();
+
+
 	}
 
 	function nextPlayer(){
+
 		
 		if($scope.currPlayer === $scope.numPlayers-1)
 			$scope.currPlayer = -1;
   	$scope.currPlayer++;
+  	if($scope.players[$scope.currPlayer].czar === true){
+  		console.log("CZAR at: ", $scope.currPlayer);
+			nextPlayer();
+		}
+
+    console.log("Next player at: ", $scope.currPlayer);
+
 		$scope.currWhiteCards = $scope.players[$scope.currPlayer].hand;
+
+		//check if wihte cards = pick*numplayers
+		console.log($scope.submittedWhiteCards.length ," vs ",  $scope.currBlackCard.pick*$scope.numPlayers)
+		if($scope.submittedWhiteCards.length === $scope.currBlackCard.pick*$scope.numPlayers){
+			//go to judge
+			console.log("go to judge");
+
+		}
 	}
 
 	function shuffle(array){
