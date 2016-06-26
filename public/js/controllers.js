@@ -5,18 +5,17 @@ var app = angular.module('myApp');
 app.controller('mainCtrl', function($scope, $http, $state, Deck){
 	console.log('loadmain');
 
-	//$scope.currBlackCard = getBlackCard();
+	const HANDSIZE = 10;
+
+	$scope.game = {};
+
 	$scope.currPlayer;
 	var whiteCards;
 	var blackCards;
-	$scope.lastPooped = [3,4,3,2,6,6];
+	$scope.lastPooped = [3,4,1];
 	$scope.currBlackCard;
 
-	//  why does this become the value when startGame is called?
-	//  $scope.numPlayers = 5;
-
 	$scope.startGame = function(){
-	  debugger;
 		fillBlackDeck()
 		.then(fillWhiteDeck)
 		.then(function (){
@@ -27,24 +26,28 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 			pickCzar();
 			$scope.currWhiteCards = $scope.players[$scope.currPlayer].hand;
 			$state.go('player');
-			console.log($scope.numPlayers);
+			console.log($scope.game.numPlayers);
 		})
 		.catch(err=>{
 			console.log(err);
 		});
 	}
 
-	function populateHand(){
+	function populateHands(){
+		for (let i = 0, len = players.length; i < len; i++){
+			$scope.players[i].hand.push(getWhiteCards(HANDSIZE - $scope.players[i].hand.length))
+		}
 	}
 
 
 	function judgePicks(){
-		
+		$scope.players[$scope.currPlayer].score++;
+		populateHands();
 	}
 
 	
 	function newRound(){
-		
+		getBlackCard();
 	}
 
 	
@@ -77,7 +80,7 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 	function createPlayers(){
 		$scope.players = [];
 
-		for(let i =0; i<$scope.numPlayers; i++){
+		for(let i =0; i<$scope.game.numPlayers; i++){
 			let playerToAdd = {
 				hand: getWhiteCards(10),
 				czar: false,
@@ -92,7 +95,7 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 	function pickCzar(){
 		var min = Infinity;
 		var czarIndex = 0;
-		for(let i =0; i< $scope.numPlayers; i++){
+		for(let i =0; i< $scope.game.numPlayers; i++){
 			if($scope.players[i].pooped < min){
 				min = $scope.players[i].pooped;
 				czarIndex =i;
@@ -100,7 +103,7 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 
 		}
 		$scope.players[czarIndex].czar = true;
-		if(czarIndex == $scope.numPlayers-1)
+		if(czarIndex == $scope.game.numPlayers-1)
 			czarIndex = -1;
 		$scope.currPlayer = czarIndex+1;
 	}
@@ -140,7 +143,7 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 
 	function nextPlayer(){
 
-		if($scope.currPlayer === $scope.numPlayers-1)
+		if($scope.currPlayer === $scope.game.numPlayers-1)
 			$scope.currPlayer = -1;
 		$scope.currPlayer++;
 		if($scope.players[$scope.currPlayer].czar === true){
@@ -153,8 +156,8 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 		$scope.currWhiteCards = $scope.players[$scope.currPlayer].hand;
 
 		//check if wihte cards = pick*numplayers
-		console.log($scope.submittedWhiteCards.length ," vs ",  $scope.currBlackCard.pick*$scope.numPlayers)
-		if($scope.submittedWhiteCards.length === $scope.currBlackCard.pick*$scope.numPlayers){
+		console.log($scope.submittedWhiteCards.length ," vs ",  $scope.currBlackCard.pick*$scope.game.numPlayers)
+		if($scope.submittedWhiteCards.length === $scope.currBlackCard.pick*($scope.game.numPlayers -1)){
 			$state.go('judgeScreen');
 		}
 	}
