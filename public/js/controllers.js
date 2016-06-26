@@ -23,9 +23,17 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 		fillBlackDeck()
 		.then(fillWhiteDeck)
 		.then(function (){
-			$scope.submittedWhiteCards = [];
-			$scope.currWhiteCards = [];
 			getBlackCard();
+
+			//  reset submittedWhiteCards with space for each player's submission
+			//  there are holes in the array. 
+			$scope.submittedWhiteCards = [];
+			for (let i = 0; i < $scope.game.numPlayers; i++){
+				if(!players[i].czar)
+					$scope.submittedWhiteCards[i] = [];
+			}
+
+			$scope.currWhiteCards = [];
 			createPlayers();
 			pickCzar();
 			$scope.currWhiteCards = $scope.players[$scope.currPlayer].hand;
@@ -159,11 +167,8 @@ function getWhiteCards(numCards){
 
 $scope.submitWhiteCard = function(card,index){
 	card.player = $scope.currPlayer;
-	$scope.submittedWhiteCards.push(card)
-	$scope.players[$scope.currPlayer].hand.splice(index, 1);
-	console.log("$scope.currBlackCard.pick:", $scope.currBlackCard.pick);
-	console.log("$scope.submittedWhiteCards.length:", $scope.submittedWhiteCards.length);
-	console.log("mod val: ", (!($scope.submittedWhiteCards.length % $scope.currBlackCard.pick)));
+	$scope.submittedWhiteCards[card.player].push(card);
+	$scope.players[card.player].hand.splice(index, 1);
 	if( !($scope.submittedWhiteCards.length % $scope.currBlackCard.pick))
 		nextPlayer();
 }
@@ -174,16 +179,12 @@ function nextPlayer(){
 		$scope.currPlayer = -1;
 	$scope.currPlayer++;
 	if($scope.players[$scope.currPlayer].czar === true){
-		console.log("CZAR at: ", $scope.currPlayer);
 		nextPlayer();
 	}
-
-	console.log("Next player at: ", $scope.currPlayer);
 
 	$scope.currWhiteCards = $scope.players[$scope.currPlayer].hand;
 
 	//check if wihte cards = pick*numplayers
-	console.log($scope.submittedWhiteCards.length ," vs ",  $scope.currBlackCard.pick*$scope.game.numPlayers)
 	if($scope.submittedWhiteCards.length === $scope.currBlackCard.pick*($scope.game.numPlayers -1)){
 		$state.go('judgeScreen');
 	}
