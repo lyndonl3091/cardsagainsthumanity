@@ -2,11 +2,11 @@
   padding-top: 8px;
 }
 
-/*.bordersPage2{
-  height: 400px;
-  width: 1000px;
-  border: 1px solid black;
-}*/
+.container {
+  text-align: center;
+}
+
+
 .blackCardPage2{
   float: none;
   background-color: black;
@@ -44,4 +44,3 @@
 div.sweet-overlay{
   background-color:rgba( 0, 0, 0, 1);
 }
-
