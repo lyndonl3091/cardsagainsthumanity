@@ -1,29 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Start Game</title>
+    <meta charset="UTF-8">
+    <title>Start Game</title>
 </head>
+
 <body ng-controller='mainCtrl'>
- <div class = "container">
-  <h1>Start Game</h1>
-</div>
-<form>
+    <div class="container">
+        <h1>Start Game</h1>
+    </div>
+    <form>
 
-  Number of Players <input type="number" min=5 ng-model ='game.numPlayers' required>
-  <button ng-click='startGame()'>Submit</button>
-</form>
+        Number of Players
+        <input type="number" min=5 ng-model='game.numPlayers' required>
+        <button ng-click='startGame()'>Submit</button>
+    </form>
+
+    <form ng-model='lastPooped' ng-submit='startGame()'>
+      <div class="out">
+
+        <div class="inner">
+
+          <input type="text" ng-repeat='player in players' placeholder="Hours since last poop">{{player}}
+
+        </div>
 
 
+      </div>
 
-<form ng-submit='startGame()'>
-
-  <br><input type="text" ng-repeat='player in players' placeholder="Hours since last poop">{{player}}
-  <button>Submit</button>
-</form>
+        <button>Submit</button>
+    </form>
 
 
 
 
 </body>
+
 </html>

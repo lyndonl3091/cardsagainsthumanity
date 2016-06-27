@@ -8,6 +8,7 @@
   border: 1px solid black;
 }*/
 .blackCardPage2{
+  float: left;
   text-align: left;
   background-color: black;
   color:white;
@@ -27,4 +28,11 @@
 
 .row {
   margin-left: 5px;
+}
+
+.outer{
+  position: relative;
+}
+.inner {
+  position: absolute;
 }
