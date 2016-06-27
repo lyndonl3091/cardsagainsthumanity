@@ -83,6 +83,7 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 	}
 
 	$scope.clearScore = () => {
+
 		
 	}
 
