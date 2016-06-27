@@ -12,12 +12,15 @@
   text-align: left;
   background-color: black;
   color:white;
-  height: 200px;
-  width: 150px;
+  height: 300px;
+  width: 250px;
   border: 1px solid black;
   margin-top: 20px;
   margin-left: 250px;
   /*text-align:center;*/
+  border-radius: 25px;
+  font-size: 25px;
+
 }
 .whiteCardPage2{
   height: 200px;
@@ -36,13 +39,3 @@
 .inner {
   position: absolute;
 }
-
-/*.whiteCard {
-  display: inline-block;
-  margin: 0 0.5rem 0.5rem 0;
-  padding: 0.5rem;
-  text-align: left;
-  background-color: white;
-  border: 1px solid transparentize( #58C25F, 0.5 );
-
-}*/
