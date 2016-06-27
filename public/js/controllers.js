@@ -5,7 +5,7 @@ var app = angular.module('myApp');
 app.controller('mainCtrl', function($scope, $http, $state, Deck){
 
 	const HANDSIZE = 10;
-	const SCORETOWIN = 7;
+	const SCORETOWIN = 2;
 
 	$scope.startGame = {
 		numPlayers:6,
