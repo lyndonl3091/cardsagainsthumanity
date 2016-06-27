@@ -14,8 +14,9 @@
       <th>Score</th>
     </thead>
     <tbody>
-      <tr ng-repeat='player in players'>
+      <tr ng-repeat='player in players' class='animated fadeInDown'>
         <td>{{player}}</td>
+        <td>{{player.points}}</td>
       </tr>
     </tbody>
   </table>

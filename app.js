@@ -35,7 +35,7 @@ app.use('/decks', require('./routes/decks'));
 
 
 app.use('/', (req, res)=>{
-  res.render('index', {'title': 'NEW TITLE'});
+  res.render('index', {'title': 'CAH'});
 });
 
 // catch 404 and forward to error handler
