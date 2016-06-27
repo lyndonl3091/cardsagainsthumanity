@@ -49,11 +49,16 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 
 
 			pickCzar();
-			$state.go('playerScreen');
+			swal({ title: `${$scope.players[$scope.currPlayer].name}'s Turn`}, goToStart);
+			
 		})
 		.catch(err=>{
 			console.log(err);
 		});
+	}
+
+	function goToStart(){
+		$state.go('playerScreen');
 	}
 
 
@@ -68,14 +73,16 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 		console.log();
 		//  winning player goes first next round
 		$scope.currPlayer = index;
-		console.log( $scope.players[$scope.currPlayer].score);
 		$scope.players[$scope.currPlayer].score++;
 		if($scope.players[$scope.currPlayer].score === SCORETOWIN){
 			$state.go('endGameScreen');
 		}
 		else {
 			populateHands();
-			swal({   title: "Sweet!",   text: "Here's a custom image.",   imageUrl: "images/thumbs-up.jpg" }, newRound);
+			let nextNameIndex = ($scope.currPlayer+1) % $scope.players.length;
+		  if($scope.players[nextNameIndex].czar === true)
+			  nextNameIndex = ($scope.currPlayer + 2) % $scope.players.length;
+			swal({title: `${$scope.players[$scope.currPlayer].name} wins this round!`,  text: `next player is: ${$scope.players[nextNameIndex].name}`}, newRound);
 			//  sweetAlert triggers
 		}
 	}
@@ -84,13 +91,11 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 	function newRound(){
 		getBlackCard();
 
-		$state.go('playerScreen');
-
+    $state.go('playerScreen');
 		changeCzar();
 		if ($scope.players[$scope.currPlayer].czar)
 			$scope.currPlayer = ($scope.currPlayer + 1) % $scope.players.length;
 		$scope.submittedWhiteCards = [];
-
 		for (let i = 0; i < $scope.startGame.numPlayers; i++){
 			if(!$scope.players[i].czar)
 				$scope.submittedWhiteCards[i] = [];
@@ -144,7 +149,6 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 			}
 			$scope.players.push(playerToAdd);
 		}
-		console.log("players: ", $scope.players);
 	}
 
 	function pickCzar(){
@@ -187,10 +191,11 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 		$scope.submittedWhiteCards[card.player].push(card);
 		$scope.players[card.player].hand.splice(index, 1);
 		let length  = getLength($scope.submittedWhiteCards);
-		if(!(length % $scope.currBlackCard.pick))
-			nextPlayer();
-
+		if(!(length % $scope.currBlackCard.pick)){
+		  nextPlayer();
+		}
 	}
+
 
 	function getLength(nestedArr){
 		var flattened = nestedArr.reduce(function(a, b) {
@@ -206,14 +211,16 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 		if($scope.players[$scope.currPlayer].czar === true)
 			$scope.currPlayer = ($scope.currPlayer + 1) % $scope.players.length;
 
-
-		//check if white cards = pick*numplayers
-
 		let length  = getLength($scope.submittedWhiteCards);
 		if(length === $scope.currBlackCard.pick*($scope.startGame.numPlayers -1)){
 			$state.go('judgeScreen');
 		}
+		else{
+		  swal({ title: `${$scope.players[$scope.currPlayer].name}'s Turn`});
+		}
+
 	}
+
 
 	function shuffle(array){
 		var currentIndex = array.length, temporaryValue, randomIndex;

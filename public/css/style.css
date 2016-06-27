@@ -37,6 +37,10 @@
   position: absolute;
 }
 
+div.sweet-overlay{
+  background-color:rgba( 0, 0, 0, 1);
+}
+
 /*.whiteCard {
   display: inline-block;
   margin: 0 0.5rem 0.5rem 0;
