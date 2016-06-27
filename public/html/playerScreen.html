@@ -8,12 +8,9 @@
  <div class = "container">
   <h1>Player {{currPlayer}}'s hand</h1>
 
-  <table class='table'>
-    <thead>
-      <th>Black card Contents</th>
-      <th>{{currBlackCard.text}}</th>
-    </thead>
-  </table>
+  <div class="col-sm-6 blackCardPage2 animated lightSpeedIn">
+      <p ng-bind-html='{{currBlackCard.text}}'></p>
+  </div>
 
   <table class='table table-hover table-striped'>
     <thead>
