@@ -1,22 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Start Game</title>
+    <meta charset="UTF-8">
+    <title>Start Game</title>
 </head>
+
 <body ng-controller='mainCtrl'>
- <div class = "container">
-  <h1>Start Game</h1>
-</div>
-<form>
+    <div class="container">
+        <h1>Start Game</h1>
+    </div>
+
+
+
+    <form ng-model='lastPooped' ng-submit='startGame()'>
+      <div class="out">
 
   Number of Players <input type="number" min=3 ng-model ='game.numPlayers' required>
   <button ng-click='startGame()'>Submit</button>
 </form>
 
 
+        <div class="inner">
 
-<form ng-submit='startGame()'>
+          <input type="text" ng-repeat='player in players' placeholder="Hours since last poop">{{player}}
 
   <br><input type="text" ng-repeat='player in game.numPlayersArray track by $index' placeholder="Hours since last poop">{{player}}
   <button>Submit</button>
@@ -26,4 +33,5 @@
 
 
 </body>
+
 </html>

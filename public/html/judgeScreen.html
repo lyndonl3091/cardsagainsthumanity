@@ -10,7 +10,7 @@
   <div class="col-sm-12"></div>
 
   <div class="bordersPage2">
-      <div class="blackCardPage2">
+      <div class="col-sm-6 blackCardPage2 animated lightSpeedIn">
           {{currBlackCard.text}}
       </div>
 
@@ -21,10 +21,16 @@
         </thead>
         <tbody>
           <tr ng-repeat='group in submittedWhiteCards track by $index'>
-            <td ng-click='judgePicks(card.player)' ng-repeat='card in group track by $index'>{{card.text}}</td>
+
+
+            <td class='animated slideInDown' ng-click='judgePicks(card.player)' ng-repeat='card in group track by $index'>{{card.text}}</td>
           </tr>
         </tbody>
       </table>
+
+      <div id="endGame">
+        <button class="btn btn-danger">End Game</button>
+      </div>
 
 
       </div>

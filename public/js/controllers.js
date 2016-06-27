@@ -42,7 +42,7 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 			getBlackCard();
 			createPlayers();
 			//  reset submittedWhiteCards with space for each player's submission
-			//  there are holes in the array. 
+			//  there are holes in the array.
 			$scope.submittedWhiteCards = [];
 			for (let i = 0; i < $scope.game.numPlayers; i++){
 				if(!$scope.players[i].czar)
@@ -67,6 +67,7 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 
 
 	$scope.judgePicks = index => {
+		console.log();
 		//  winning player goes first next round
 		$scope.currPlayer = index;
 		console.log( $scope.players[$scope.currPlayer].score);

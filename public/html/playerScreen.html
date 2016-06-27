@@ -21,8 +21,9 @@
     </thead>
     <tbody>
       <!-- <tr></tr> -->
-			<tr ng-repeat='whiteCard in players[currPlayer].hand track by $index'>
-        <td>{{whiteCard.text}}</td>
+      <tr ng-repeat='whiteCard in players[currPlayer].hand track by $index'>
+        <td class ='animated fadeIn'>{{whiteCard.text}}</td>
+
         <td><button class='btn btn-danger' ng-click='submitWhiteCard(whiteCard,$index)'>Select</button></td>
       </tr>
     </tbody>
