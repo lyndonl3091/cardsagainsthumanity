@@ -81,9 +81,10 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 		}
 		else {
 			populateHands();
-			let nextNameIndex = ($scope.currPlayer+1) % $scope.players.length;
-		  if($scope.players[nextNameIndex].czar === true)
-			  nextNameIndex = ($scope.currPlayer + 2) % $scope.players.length;
+			let nextNameIndex = ($scope.currPlayer);
+			  if( $scope.players[($scope.currPlayer + 2) % $scope.players.length].czar)
+			  	nextNameIndex = (nextNameIndex + 1)% $scope.players.length;
+
 			swal({title: `${$scope.players[$scope.currPlayer].name} wins this round!`,  text: `next player is: ${$scope.players[nextNameIndex].name}`}, newRound);
 			//  sweetAlert triggers
 		}
