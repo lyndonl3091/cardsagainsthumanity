@@ -13,11 +13,11 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 		poops:[],
 	};
 
+	$scope.currCzarName;
+
 	$scope.$watch('startGame.numPlayers', function(newVal,oldVal) {
 		$scope.startGame.numPlayersArray = makeNumPlayersArray(newVal);
 	},true);
-
-
 
 
 
@@ -47,10 +47,9 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 					$scope.submittedWhiteCards[i] = [];
 			}
 
-
 			pickCzar();
 			swal({ title: `${$scope.players[$scope.currPlayer].name}'s Turn`}, goToStart);
-			
+
 		})
 		.catch(err=>{
 			console.log(err);
@@ -82,8 +81,8 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 		else {
 			populateHands();
 			let nextNameIndex = ($scope.currPlayer);
-			  if( $scope.players[($scope.currPlayer + 2) % $scope.players.length].czar)
-			  	nextNameIndex = (nextNameIndex + 1)% $scope.players.length;
+			if( $scope.players[($scope.currPlayer + 2) % $scope.players.length].czar)
+				nextNameIndex = (nextNameIndex + 1)% $scope.players.length;
 
 			swal({title: `${$scope.players[$scope.currPlayer].name} wins this round!`,  text: `next player is: ${$scope.players[nextNameIndex].name}`}, newRound);
 			//  sweetAlert triggers
@@ -92,14 +91,14 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 
 	$scope.clearScore = () => {
 
-		
+
 	}
 
 
 	function newRound(){
 		getBlackCard();
 
-    $state.go('playerScreen');
+		$state.go('playerScreen');
 		changeCzar();
 		if ($scope.players[$scope.currPlayer].czar)
 			$scope.currPlayer = ($scope.currPlayer + 1) % $scope.players.length;
@@ -171,6 +170,7 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 			$scope.players[czarIndex].czar = true;
 		}
 		$scope.currPlayer = (czarIndex + 1) % $scope.players.length;
+		$scope.currCzarName = $scope.players[czarIndex].name;
 	}
 
 	function getBlackCard(){
@@ -203,7 +203,7 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 		$scope.players[card.player].hand.splice(index, 1);
 		let length  = getLength($scope.submittedWhiteCards);
 		if(!(length % $scope.currBlackCard.pick)){
-		  nextPlayer();
+			nextPlayer();
 		}
 	}
 
@@ -227,7 +227,7 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 			$state.go('judgeScreen');
 		}
 		else{
-		  swal({ title: `${$scope.players[$scope.currPlayer].name}'s Turn`});
+			swal({ title: `${$scope.players[$scope.currPlayer].name}'s Turn`});
 		}
 
 	}
