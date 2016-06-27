@@ -7,25 +7,23 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 	const HANDSIZE = 10;
 	const SCORETOWIN = 7;
 
-	$scope.game = {
+	$scope.startGame = {
 		numPlayers:6,
+		names:[],
+		poops:[],
 	};
 
-	// $scope.game.numPlayersArray = makeNumPlayersArray($scope.numPlayers);
-
-	$scope.$watch('game.numPlayers', function(newVal,oldVal) {
-		$scope.game.numPlayersArray = makeNumPlayersArray($scope.game.numPlayers);
-		console.log($scope.game.numPlayersArray);
+	$scope.$watch('startGame.numPlayers', function(newVal,oldVal) {
+		$scope.startGame.numPlayersArray = makeNumPlayersArray(newVal);
 	},true);
 
-
-
 	
+
+
+
 	$scope.currPlayer;
 	var whiteCards;
 	var blackCards;
-	$scope.lastPooped = [3,4,1];
-	$scope.lastPooped = [];
 	$scope.currBlackCard;
 
 
@@ -44,7 +42,7 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 			//  reset submittedWhiteCards with space for each player's submission
 			//  there are holes in the array.
 			$scope.submittedWhiteCards = [];
-			for (let i = 0; i < $scope.game.numPlayers; i++){
+			for (let i = 0; i < $scope.startGame.numPlayers; i++){
 				if(!$scope.players[i].czar)
 					$scope.submittedWhiteCards[i] = [];
 			}
@@ -93,7 +91,7 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 			$scope.currPlayer = ($scope.currPlayer + 1) % $scope.players.length;
 		$scope.submittedWhiteCards = [];
 
-		for (let i = 0; i < $scope.game.numPlayers; i++){
+		for (let i = 0; i < $scope.startGame.numPlayers; i++){
 			if(!$scope.players[i].czar)
 				$scope.submittedWhiteCards[i] = [];
 		}
@@ -136,13 +134,13 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 	function createPlayers(){
 		$scope.players = [];
 
-		for(let i =0; i<$scope.game.numPlayers; i++){
+		for(let i =0; i<$scope.startGame.numPlayers; i++){
 			let playerToAdd = {
-				name: $scope.playerName[i],
+				name: $scope.startGame.names[i],
 				hand: getWhiteCards(10),
 				czar: false,
 				score: 0,
-				pooped: $scope.lastPooped[i]
+				pooped: $scope.startGame.poops[i]
 			}
 			$scope.players.push(playerToAdd);
 		}
@@ -152,7 +150,7 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 	function pickCzar(){
 		var min = Infinity;
 		var czarIndex = 0;
-		for(let i =0; i< $scope.game.numPlayers; i++){
+		for(let i =0; i< $scope.startGame.numPlayers; i++){
 			if($scope.players[i].pooped < min){
 				min = $scope.players[i].pooped;
 				czarIndex =i;
@@ -212,7 +210,7 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 		//check if white cards = pick*numplayers
 
 		let length  = getLength($scope.submittedWhiteCards);
-		if(length === $scope.currBlackCard.pick*($scope.game.numPlayers -1)){
+		if(length === $scope.currBlackCard.pick*($scope.startGame.numPlayers -1)){
 			$state.go('judgeScreen');
 		}
 	}
