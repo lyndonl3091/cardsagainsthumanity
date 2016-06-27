@@ -33,10 +33,8 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 					$scope.submittedWhiteCards[i] = [];
 			}
 
-			$scope.currWhiteCards = [];
 
 			pickCzar();
-			$scope.currWhiteCards = $scope.players[$scope.currPlayer].hand;
 			$state.go('player');
 		})
 		.catch(err=>{
@@ -55,6 +53,7 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 	$scope.judgePicks = index => {
 		//  winning player goes first next round
 		$scope.currPlayer = index;
+		console.log( $scope.players[$scope.currPlayer].score);
 		$scope.players[$scope.currPlayer].score++;
 		populateHands();
 		swal({   title: "Sweet!",   text: "Here's a custom image.",   imageUrl: "images/thumbs-up.jpg" }, newRound);
@@ -68,17 +67,19 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 		if($scope.players[$scope.currPlayer].score === SCORETOWIN){
 			$state.go('endGameScreen');
 		} else {
-			changeCzar();
 			$state.go('player');
 		}
+
+		changeCzar();
+		if ($scope.players[$scope.currPlayer].czar)
+			$scope.currPlayer = ($scope.currPlayer + 1) % $scope.players.length;
 		$scope.submittedWhiteCards = [];
+
 		for (let i = 0; i < $scope.game.numPlayers; i++){
 			if(!$scope.players[i].czar)
 				$scope.submittedWhiteCards[i] = [];
 		}
-		console.log( $scope.submittedWhiteCards);
 	}
-
 
 
 	function changeCzar() {
@@ -86,12 +87,10 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 			if ($scope.players[index].czar) {
 				$scope.players[index].czar = false;
 				$scope.players[(index + 1) % $scope.players.length].czar = true;
+				break;
 			}
 		}
 	}
-
-
-
 
 
 	function fillWhiteDeck(){
@@ -123,7 +122,7 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 			let playerToAdd = {
 				hand: getWhiteCards(10),
 				czar: false,
-				points: 0,
+				score: 0,
 				pooped: $scope.lastPooped[i]
 			}
 			$scope.players.push(playerToAdd);
@@ -139,12 +138,9 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 				min = $scope.players[i].pooped;
 				czarIndex =i;
 			}
-
+			$scope.players[czarIndex].czar = true;
 		}
-		$scope.players[czarIndex].czar = true;
-		if(czarIndex == $scope.game.numPlayers-1)
-			czarIndex = -1;
-		$scope.currPlayer = czarIndex+1;
+		$scope.currPlayer = (czarIndex + 1) % $scope.players.length;
 	}
 
 	function getBlackCard(){
@@ -171,7 +167,6 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 
 	$scope.submitWhiteCard = function(card,index){
 		card.player = $scope.currPlayer;
-		console.log(card.player);
 		$scope.submittedWhiteCards[card.player].push(card);
 		$scope.players[card.player].hand.splice(index, 1);
 		let length  = getLength($scope.submittedWhiteCards);
@@ -194,7 +189,6 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 		if($scope.players[$scope.currPlayer].czar === true)
 			$scope.currPlayer = ($scope.currPlayer + 1) % $scope.players.length;
 
-		$scope.currWhiteCards = $scope.players[$scope.currPlayer].hand;
 
 		//check if white cards = pick*numplayers
 
