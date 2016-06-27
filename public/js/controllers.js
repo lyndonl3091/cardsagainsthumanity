@@ -17,7 +17,7 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 		$scope.startGame.numPlayersArray = makeNumPlayersArray(newVal);
 	},true);
 
-	
+
 
 
 
@@ -89,23 +89,26 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 		changeCzar();
 		if ($scope.players[$scope.currPlayer].czar)
 			$scope.currPlayer = ($scope.currPlayer + 1) % $scope.players.length;
-		$scope.submittedWhiteCards = [];
 
+		$scope.submittedWhiteCards = [];
 		for (let i = 0; i < $scope.startGame.numPlayers; i++){
 			if(!$scope.players[i].czar)
 				$scope.submittedWhiteCards[i] = [];
 		}
+		console.log('subwc', $scope.submittedWhiteCards);
+		console.log('ply', $scope.players);
 	}
 
 
 	function changeCzar() {
-		for(var index = $scope.players.length - 1; index >= 0 ; index--){
+		let previousCzar = 0;
+		for(var index = 0, len = $scope.players.length; index < $scope.players.length ; index++){
 			if ($scope.players[index].czar) {
-				$scope.players[index].czar = false;
-				$scope.players[(index + 1) % $scope.players.length].czar = true;
-				break;
+				previousCzar = index;
 			}
+			$scope.players[index].czar = false;
 		}
+		$scope.players[(previousCzar + 1) % $scope.players.length].czar = true;
 	}
 
 
