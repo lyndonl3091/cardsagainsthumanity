@@ -7,8 +7,20 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 	const HANDSIZE = 10;
 	const SCORETOWIN = 7;
 
-	$scope.game = {numPlayers:5};
+	$scope.game = {
+		numPlayers:6,
+	};
 
+	// $scope.game.numPlayersArray = makeNumPlayersArray($scope.numPlayers);
+
+	$scope.$watch('game.numPlayers', function(newVal,oldVal) {
+		$scope.game.numPlayersArray = makeNumPlayersArray($scope.game.numPlayers);
+		console.log($scope.game.numPlayersArray);
+	},true);
+
+
+
+	
 	$scope.currPlayer;
 	var whiteCards;
 	var blackCards;
@@ -17,6 +29,10 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 	$scope.currBlackCard;
 
 
+
+	function makeNumPlayersArray(num){
+		return new Array(num);
+	}
 
 
 	$scope.startGame = function(){
@@ -35,7 +51,7 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 
 
 			pickCzar();
-			$state.go('player');
+			$state.go('playerScreen');
 		})
 		.catch(err=>{
 			console.log(err);
@@ -56,20 +72,21 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 		$scope.currPlayer = index;
 		console.log( $scope.players[$scope.currPlayer].score);
 		$scope.players[$scope.currPlayer].score++;
-		populateHands();
-		swal({   title: "Oookayyyy, alllrightttt",   text: `Player ${index} wins!`,   imageUrl: "../images/winner.png" }, newRound);
-		//  sweetAlert triggers
-
+		if($scope.players[$scope.currPlayer].score === SCORETOWIN){
+			$state.go('endGameScreen');
+		}
+		else {
+			populateHands();
+			swal({   title: "Sweet!",   text: "Here's a custom image.",   imageUrl: "images/thumbs-up.jpg" }, newRound);
+			//  sweetAlert triggers
+		}
 	}
 
 
 	function newRound(){
 		getBlackCard();
-		if($scope.players[$scope.currPlayer].score === SCORETOWIN){
-			$state.go('endGameScreen');
-		} else {
-			$state.go('player');
-		}
+
+		$state.go('playerScreen');
 
 		changeCzar();
 		if ($scope.players[$scope.currPlayer].czar)
@@ -121,6 +138,7 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 
 		for(let i =0; i<$scope.game.numPlayers; i++){
 			let playerToAdd = {
+				name: $scope.playerName[i],
 				hand: getWhiteCards(10),
 				czar: false,
 				score: 0,
@@ -217,8 +235,6 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 		return array;
 	}
 
-
-
 });
 
 
@@ -227,7 +243,7 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 
 
 
-app.controller('startGameCtrl', function($scope, $stateParams){
+app.controller('startGameScreenCtrl', function($scope, $stateParams){
 });
 
 
@@ -235,8 +251,8 @@ app.controller('judgeScreenCtrl', function($scope, $stateParams){
 
 });
 
-app.controller('playerCtrl', function($scope, $stateParams){
+app.controller('playerScreenCtrl', function($scope, $stateParams){
 });
 
-app.controller('game4Ctrl', function($scope, $stateParams){
+app.controller('endGameScreenCtrl', function($scope, $stateParams){
 });
