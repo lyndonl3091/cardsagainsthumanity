@@ -10,15 +10,16 @@
     <div class="container">
         <h1>Start Game</h1>
     </div>
-    <form>
 
-        Number of Players
-        <input type="number" min=5 ng-model='game.numPlayers' required>
-        <button ng-click='startGame()'>Submit</button>
-    </form>
+
 
     <form ng-model='lastPooped' ng-submit='startGame()'>
       <div class="out">
+
+  Number of Players <input type="number" min=3 ng-model ='game.numPlayers' required>
+  <button ng-click='startGame()'>Submit</button>
+</form>
+
 
         <div class="inner">
 
