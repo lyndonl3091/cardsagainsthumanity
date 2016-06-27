@@ -165,9 +165,11 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 			fillBlackDeck()
 			.then(function() {
 				$scope.currBlackCard = blackCards.splice(0, 1)[0];
+
 			});
 		} else {
 			$scope.currBlackCard = blackCards.splice(0, 1)[0];
+
 		}
 	}
 
