@@ -17,7 +17,7 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 		$scope.startGame.numPlayersArray = makeNumPlayersArray(newVal);
 	},true);
 
-	
+
 
 
 
@@ -75,7 +75,9 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 		$scope.currPlayer = index;
 		$scope.players[$scope.currPlayer].score++;
 		if($scope.players[$scope.currPlayer].score === SCORETOWIN){
+			$scope.winner = $scope.players[$scope.currPlayer].name; //calls name of winner
 			$state.go('endGameScreen');
+
 		}
 		else {
 			populateHands();
@@ -85,6 +87,11 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 			swal({title: `${$scope.players[$scope.currPlayer].name} wins this round!`,  text: `next player is: ${$scope.players[nextNameIndex].name}`}, newRound);
 			//  sweetAlert triggers
 		}
+	}
+
+	$scope.clearScore = () => {
+
+		
 	}
 
 
@@ -104,13 +111,14 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 
 
 	function changeCzar() {
-		for(var index = $scope.players.length - 1; index >= 0 ; index--){
+		let previousCzar = 0;
+		for(var index = 0, len = $scope.players.length; index < $scope.players.length ; index++){
 			if ($scope.players[index].czar) {
-				$scope.players[index].czar = false;
-				$scope.players[(index + 1) % $scope.players.length].czar = true;
-				break;
+				previousCzar = index;
 			}
+			$scope.players[index].czar = false;
 		}
+		$scope.players[(previousCzar + 1) % $scope.players.length].czar = true;
 	}
 
 
@@ -169,9 +177,11 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 			fillBlackDeck()
 			.then(function() {
 				$scope.currBlackCard = blackCards.splice(0, 1)[0];
+
 			});
 		} else {
 			$scope.currBlackCard = blackCards.splice(0, 1)[0];
+
 		}
 	}
 

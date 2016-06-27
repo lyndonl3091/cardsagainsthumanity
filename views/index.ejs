@@ -15,6 +15,7 @@
   <link rel="stylesheet" type="text/css" href="/bower_components/sweetalert/dist/sweetalert.css">
 
 
+  <script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
   <script src="/js/module.js"></script>
   <script src="/js/controllers.js"></script>
   <script src="/js/services.js"></script>
@@ -26,11 +27,11 @@
   <div class="container">
   <div class="gameSquares">
 
-    <button type="button" class="btn btn-warning game1" ui-sref ="home">Home</button>
-    <button type="button" class="btn btn-warning game1" ui-sref ="startGameScreen">Start Game</button>
+    <button type="button" class="btn btn-primary " ui-sref ="home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></button>
+    <button type="button" class="btn btn-success game1" ui-sref ="startGameScreen">Start Game<span class="glyphicon glyphicon-play" aria-hidden="true"></span></button>
     <button type="button" class="btn btn-info game2" ui-sref ="judgeScreen">Judge Screen</button>
     <button type="button" class="btn btn-danger game3" ui-sref ="playerScreen">Player</button>
-    <button type="button" class="btn btn-success game4" ui-sref ="endGameScreen">Game 4</button>
+    <button type="button" class="btn btn-score game4" ui-sref ="endGameScreen">Score</button>
   </div>
   </div>
 </nav>

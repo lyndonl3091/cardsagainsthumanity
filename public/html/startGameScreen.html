@@ -16,8 +16,12 @@
 				<div class="out">
 
 
-					Number of Players <input type="number" min=3 ng-model ='startGame.numPlayers' required>
+					<input type="number" min=3 ng-model ='startGame.numPlayers' placeholder="Number of Players" required>
 					<button ng-click='startGame()'>Submit</button>
+					<br>
+					<div></div>
+					<br>
+					<div></div>
 
 
 					<div ng-repeat='player in startGame.numPlayersArray track by $index'>

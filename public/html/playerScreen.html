@@ -8,12 +8,9 @@
  <div class = "container">
   <h1>{{players[currPlayer].name}}'s hand</h1>
 
-  <table class='table'>
-    <thead>
-      <th>Black card Contents</th>
-      <th>{{currBlackCard.text}}</th>
-    </thead>
-  </table>
+  <div class="col-sm-6 blackCardPage2 animated lightSpeedIn">
+      <p ng-bind-html='currBlackCard.text'></p>
+  </div>
 
   <table class='table table-hover table-striped'>
     <thead>
@@ -22,7 +19,7 @@
     <tbody>
       <!-- <tr></tr> -->
       <tr ng-repeat='whiteCard in players[currPlayer].hand track by $index'>
-        <td class ='whiteCard animated fadeIn'>{{whiteCard.text}}</td>
+        <td class ='whiteCard animated fadeIn'><p ng-bind-html='whiteCard.text'></p></td>
 
         <td class='whiteCard animated fadeIn'><button class='btn btn-danger' ng-click='submitWhiteCard(whiteCard,$index)'>Select</button></td>
       </tr>

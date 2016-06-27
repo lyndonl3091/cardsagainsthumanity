@@ -8,16 +8,20 @@
   border: 1px solid black;
 }*/
 .blackCardPage2{
-  float: left;
-  text-align: left;
+  float: none;
   background-color: black;
   color:white;
-  height: 200px;
-  width: 150px;
+  height: 300px;
+  width: 250px;
   border: 1px solid black;
+  padding-top: 5px;
   margin-top: 20px;
-  margin-left: 250px;
-  /*text-align:center;*/
+  margin-left: auto;
+  margin-right: auto;
+  text-align:left;
+  border-radius: 25px;
+  font-size: 25px;
+
 }
 .whiteCardPage2{
   height: 200px;
@@ -41,12 +45,3 @@ div.sweet-overlay{
   background-color:rgba( 0, 0, 0, 1);
 }
 
-/*.whiteCard {
-  display: inline-block;
-  margin: 0 0.5rem 0.5rem 0;
-  padding: 0.5rem;
-  text-align: left;
-  background-color: white;
-  border: 1px solid transparentize( #58C25F, 0.5 );
-
-}*/
