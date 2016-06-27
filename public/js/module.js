@@ -4,7 +4,7 @@ var app = angular.module('myApp', ['ui.router']);
 
 app.config(function($stateProvider, $urlRouterProvider){
     $stateProvider
-      .state('home', {url: '/', template: '<h1>Home</h1>'})
+      .state('home', {url: '/', templateUrl: 'html/homePage.html'})
       .state('startGame', {url: '/startGame', templateUrl: 'html/startGame.html', controller: 'startGameCtrl'})
       .state('judgeScreen', {url: '/judgeScreen', templateUrl: 'html/judgeScreen.html', controller: 'judgeScreenCtrl'})
       .state('player', {url: '/player', templateUrl: 'html/player.html', controller: 'playerCtrl'})

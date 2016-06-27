@@ -36,3 +36,13 @@
 .inner {
   position: absolute;
 }
+
+/*.whiteCard {
+  display: inline-block;
+  margin: 0 0.5rem 0.5rem 0;
+  padding: 0.5rem;
+  text-align: left;
+  background-color: white;
+  border: 1px solid transparentize( #58C25F, 0.5 );
+
+}*/

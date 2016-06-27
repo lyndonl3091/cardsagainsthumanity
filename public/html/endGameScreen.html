@@ -8,15 +8,15 @@
  <div class = "container">
   <h1>Score Board</h1>
 
-  <table class="table table-hover table-bordered">
+  <table class="table table-hover table-bordered table-striped">
     <thead>
       <th>Player</th>
       <th>Score</th>
     </thead>
     <tbody>
       <tr ng-repeat='player in players' class='animated fadeInDown'>
-        <td>{{player}}</td>
-        <td>{{player.points}}</td>
+        <td>Player {{players.indexOf(player)}}</td>
+        <td>{{player.score}}</td>
       </tr>
     </tbody>
   </table>
