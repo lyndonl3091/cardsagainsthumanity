@@ -71,13 +71,19 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 		console.log( $scope.players[$scope.currPlayer].score);
 		$scope.players[$scope.currPlayer].score++;
 		if($scope.players[$scope.currPlayer].score === SCORETOWIN){
+			$scope.winner = $scope.players[$scope.currPlayer].name; //calls name of winner
 			$state.go('endGameScreen');
+
 		}
 		else {
 			populateHands();
 			swal({   title: "Sweet!",   text: "Here's a custom image.",   imageUrl: "images/thumbs-up.jpg" }, newRound);
 			//  sweetAlert triggers
 		}
+	}
+
+	$scope.clearScore = () => {
+		
 	}
 
 
