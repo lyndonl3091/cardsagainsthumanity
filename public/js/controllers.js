@@ -101,8 +101,6 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 			if(!$scope.players[i].czar)
 				$scope.submittedWhiteCards[i] = [];
 		}
-		console.log('subwc', $scope.submittedWhiteCards);
-		console.log('ply', $scope.players);
 	}
 
 
