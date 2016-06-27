@@ -16,14 +16,14 @@
 				<div class="out">
 
 
-					Number of Players <input type="number" min=3 ng-model ='game.numPlayers' required>
+					Number of Players <input type="number" min=3 ng-model ='startGame.numPlayers' required>
 					<button ng-click='startGame()'>Submit</button>
 
 
-					<div ng-repeat='player in game.numPlayersArray track by $index'>
-						{{$index}}.
-						<input ng-model='playerName' type="text"  placeholder="Player Name" required>
-						<input ng-model='lastPooped' type="number" placeholder="Hours since last poop" required>
+					<div ng-repeat='player in startGame.numPlayersArray track by $index'>
+						{{$index + 1}}.
+						<input ng-model='startGame.names[$index]' type="text"  placeholder="Player Name" required>
+						<input ng-model='startGame.poops[$index]' type="text" placeholder="Hours since last poop" required>
 					</div>
 
 				</div>
