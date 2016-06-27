@@ -8,16 +8,14 @@
   border: 1px solid black;
 }*/
 .blackCardPage2{
-  float: left;
-  text-align: left;
   background-color: black;
   color:white;
   height: 300px;
   width: 250px;
   border: 1px solid black;
   margin-top: 20px;
-  margin-left: 250px;
-  /*text-align:center;*/
+  margin-left: 450px;
+  text-align:center;
   border-radius: 25px;
   font-size: 25px;
 
@@ -38,4 +36,13 @@
 }
 .inner {
   position: absolute;
+}
+
+.container {
+  text-align: center;
+}
+
+.btn-score {
+  background-color: #B0B0B0;
+  color: white; 
 }
