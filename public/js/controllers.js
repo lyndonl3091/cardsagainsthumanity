@@ -138,6 +138,7 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 
 		for(let i =0; i<$scope.game.numPlayers; i++){
 			let playerToAdd = {
+				name: $scope.playerName[i],
 				hand: getWhiteCards(10),
 				czar: false,
 				score: 0,

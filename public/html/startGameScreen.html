@@ -1,37 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Start Game</title>
-</head>
+	<head>
+		<meta charset="UTF-8">
+		<title>Start Game</title>
+	</head>
 
-<body ng-controller='mainCtrl'>
-    <div class="container">
-        <h1>Start Game</h1>
-    </div>
-
-
-
-    <form ng-model='lastPooped' ng-submit='startGame()'>
-      <div class="out">
-
-  Number of Players <input type="number" min=3 ng-model ='game.numPlayers' required>
-  <button ng-click='startGame()'>Submit</button>
-</form>
-
-
-        <div class="inner">
-
-          <input type="text" ng-repeat='player in players' placeholder="Hours since last poop">{{player}}
-
-  <br><input type="text" ng-repeat='player in game.numPlayersArray track by $index' placeholder="Hours since last poop">{{player}}
-  <button>Submit</button>
-</form>
+	<body ng-controller='mainCtrl'>
+		<div class="container">
+			<h1>Start Game</h1>
 
 
 
+			<form ng-submit='startGame()'>
+				<div class="out">
 
-</body>
 
-</html>
+					Number of Players <input type="number" min=3 ng-model ='game.numPlayers' required>
+					<button ng-click='startGame()'>Submit</button>
+
+
+					<div ng-repeat='player in game.numPlayersArray track by $index'>
+						{{$index}}.
+						<input ng-model='playerName' type="text"  placeholder="Player Name" required>
+						<input ng-model='lastPooped' type="number" placeholder="Hours since last poop" required>
+					</div>
+
+				</div>
+			</form>
+
+
+		</body>
+
+	</html>
