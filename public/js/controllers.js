@@ -78,9 +78,9 @@ app.controller('mainCtrl', function($scope, $http, $state, Deck){
 		}
 		else {
 			populateHands();
-			console.log("$scope.currPlayer: ", $scope.currPlayer);
+			//check if previous player was the czar
 			let nextNameIndex = ($scope.currPlayer);
-			if( $scope.players[($scope.currPlayer + 2) % $scope.players.length].czar)
+			if( $scope.players[($scope.currPlayer + $scope.players.length-1) % $scope.players.length].czar)
 				nextNameIndex = (nextNameIndex + 1)% $scope.players.length;
 			swal({title: `${$scope.players[$scope.currPlayer].name} wins this round!`,  text: `next player is: ${$scope.players[nextNameIndex].name}`}, newRound);
 			//  sweetAlert triggers
